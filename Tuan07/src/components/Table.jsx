@@ -1,60 +1,18 @@
-import React from 'react'
-const data = [
-  {
-    name: 'Elizabeth Lee',
-    company: 'AvatarSystems',
-    value: '$359',
-    date: '10/07/2023',
-    status: 'New',
-    avatar: 'Avatar.png'
-  },
-  {
-    name: 'Carlos Garcia',
-    company: 'SmoozeShift',
-    value: '$747',
-    date: '24/07/2023',
-    status: 'New',
-    avatar: 'Avatar (1).png'
-  },
-  {
-    name: 'Elizabeth Bailey',
-    company: 'Prime Time Telecom',
-    value: '$564',
-    date: '08/08/2023',
-    status: 'In-progress',
-    avatar: 'Avatar (2).png'
-  },
-  {
-    name: 'Ryan Brown',
-    company: 'OmniTech Corporation',
-    value: '$541',
-    date: '31/08/2023',
-    status: 'In-progress',
-    avatar: 'Avatar (3).png'
-  },
-  {
-    name: 'Ryan Young',
-    company: 'DataStream Inc.',
-    value: '$769',
-    date: '01/05/2023',
-    status: 'Completed',
-    avatar: 'Avatar (4).png'
-  },
-  {
-    name: 'Hailey Adams',
-    company: 'FlowRush',
-    value: '$922',
-    date: '10/06/2023',
-    status: 'Completed',
-    avatar: 'Avatar (5).png'
-  }
-];
+import React, { useState, useEffect } from 'react';
+
 const statusColor = {
   'New': 'text-blue-500 bg-blue-100',
   'In-progress': 'text-yellow-600 bg-yellow-100',
   'Completed': 'text-green-600 bg-green-100'
 };
 function Table() {
+    const [infoData, setInfoData] = useState([]);
+  
+    useEffect(() => {
+      fetch("https://67c821fd0acf98d070850937.mockapi.io/info")
+        .then((response) => response.json())
+        .then((data) => setInfoData(data))
+    }, []);
   return (
     <div>
       <div className="flex items-center gap-2 mb-4 p-3">
@@ -75,6 +33,9 @@ function Table() {
       <table className="min-w-full text-l p-2">
         <thead>
           <tr className="text-left text-gray-600 bg-gray-100 border-b">
+            <th className="py-2 pl-4">
+                <input type="checkbox" />
+            </th>
             <th className="py-2">CUSTOMER NAME</th>
             <th className="py-2">COMPANY</th>
             <th className="py-2">ORDER VALUE</th>
@@ -84,8 +45,11 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
+          {infoData.map((row, index) => (
             <tr key={index} className=" hover:bg-gray-50">
+              <td className="pl-4">
+                <input type="checkbox" />
+              </td>
               <td className="flex items-center gap-2 py-2">
                 <img src={row.avatar} alt="" className="w-8 h-8 rounded-full" />
                 <span className='font-bold'>{row.name}</span>
@@ -99,7 +63,7 @@ function Table() {
                 </span>
               </td>
               <td>
-                <button>✏️</button>
+                <button><img src="create.png" alt="" /></button>
               </td>
             </tr>
           ))}
