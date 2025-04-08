@@ -7,7 +7,7 @@ function SideBar() {
         <nav className='mb-4'>
             
             <ul className='text-blue-500 space-y-2'>
-                <li className='text-2xl flex text-white bg-pink-500'>
+                <li className='text-2xl flex text-white bg-pink-500 rounded-lg'>
                     <img src="Squares four 1.png" alt=""  />
                     Dashboard</li>
                 <li className='text-2xl flex text-gray-500'>
