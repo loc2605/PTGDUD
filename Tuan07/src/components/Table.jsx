@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EditModal from './EditModal';
+import AddModal from './AddModal';
 
 const statusColor = {
   'New': 'text-blue-500 bg-blue-100',
@@ -7,20 +8,22 @@ const statusColor = {
   'Completed': 'text-green-600 bg-green-100'
 };
 
-function Table() {
+const Table = () => {
   const [infoData, setInfoData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     fetch("https://67c821fd0acf98d070850937.mockapi.io/info")
       .then((response) => response.json())
-      .then((data) => setInfoData(data));
+      .then((data) => setInfoData(data))
+      .catch((error) => console.error("Lỗi khi tải dữ liệu:", error));
   }, []);
 
   const handleEditClick = (user) => {
     setSelectedUser(user);
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
   };
 
   const handleSave = () => {
@@ -37,9 +40,17 @@ function Table() {
           item.id === updatedUser.id ? updatedUser : item
         );
         setInfoData(updatedData);
-        setIsModalOpen(false);
+        setIsEditModalOpen(false);
       })
-      .catch((error) => console.error("Error updating data:", error));
+      .catch((error) => console.error("Lỗi khi cập nhật dữ liệu:", error));
+  };
+
+  const handleAddClick = () => {
+    setIsAddModalOpen(true);
+  };
+
+  const handleUserAdded = (newUser) => {
+    setInfoData([...infoData, newUser]);
   };
 
   return (
@@ -52,12 +63,13 @@ function Table() {
             <img src="Download.png" alt="Import icon" />
             <span>Import</span>
           </button>
-          <button className="flex items-center gap-1 px-3 py-1  text-pink-600 border border-pink-500 rounded-lg">
+          <button className="flex items-center gap-1 px-3 py-1 text-pink-600 border border-pink-500 rounded-lg">
             <img src="Move up.png" alt="Export icon" />
             <span>Export</span>
           </button>
         </div>
       </div>
+
       <div>
         <table className="min-w-full text-l p-2">
           <thead>
@@ -74,8 +86,8 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            {infoData.map((row, index) => (
-              <tr key={index} className="hover:bg-gray-50">
+            {infoData.map((row) => (
+              <tr key={row.id} className="hover:bg-gray-50">
                 <td className="pl-4">
                   <input type="checkbox" />
                 </td>
@@ -93,7 +105,7 @@ function Table() {
                 </td>
                 <td>
                   <button onClick={() => handleEditClick(row)}>
-                    <img src="create.png"/>
+                    <img src="create.png" alt="Edit icon" />
                   </button>
                 </td>
               </tr>
@@ -102,12 +114,27 @@ function Table() {
         </table>
       </div>
 
+      <div className="flex justify-end mt-4">
+        <button
+          className="w-35 px-4 py-2 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-100"
+          onClick={handleAddClick}
+        >
+          Add customer
+        </button>
+      </div>
+
       <EditModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
         onSave={handleSave}
         user={selectedUser}
         setUser={setSelectedUser}
+      />
+
+      <AddModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onUserAdded={handleUserAdded}
       />
     </div>
   );

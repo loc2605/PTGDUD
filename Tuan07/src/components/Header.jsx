@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Header() {
+const Header =() => {
   return (
     <div className='p-4 text-center font-bold justify-between flex'>
       <p className='font-bold text-pink-500 text-2xl'>Dashboard</p>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function Overview() {
+const Overview =() => {
   const [overviewData, setOverviewData] = useState([]);
 
   useEffect(() => {

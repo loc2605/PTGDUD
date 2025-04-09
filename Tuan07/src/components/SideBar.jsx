@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-function SideBar() {
+const SideBar =() => {
   return (
     <div className='w-1/5 flex flex-col items-center p-4'>
       <img src="Image 1858.png" alt="Logo" className="mb-6" />
