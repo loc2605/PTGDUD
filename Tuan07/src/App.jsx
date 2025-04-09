@@ -20,6 +20,7 @@ function App() {
           <Header/>
           <Overview/>
           <Routes>
+            {/* Route mặc định khi tải trang */}
             <Route path="/" element={<Table/>} />
             <Route path="/projects" element={<Projects/>} />
             <Route path="/analytics" element={<Analytics/>} />
