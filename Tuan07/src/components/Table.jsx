@@ -24,11 +24,22 @@ function Table() {
   };
 
   const handleSave = () => {
-    const updatedData = infoData.map((item) =>
-      item.id === selectedUser.id ? selectedUser : item
-    );
-    setInfoData(updatedData);
-    setIsModalOpen(false);
+    fetch(`https://67c821fd0acf98d070850937.mockapi.io/info/${selectedUser.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(selectedUser),
+    })
+      .then((response) => response.json())
+      .then((updatedUser) => {
+        const updatedData = infoData.map((item) =>
+          item.id === updatedUser.id ? updatedUser : item
+        );
+        setInfoData(updatedData);
+        setIsModalOpen(false);
+      })
+      .catch((error) => console.error("Error updating data:", error));
   };
 
   return (
@@ -82,7 +93,7 @@ function Table() {
                 </td>
                 <td>
                   <button onClick={() => handleEditClick(row)}>
-                    <img src="create.png" alt="edit" />
+                    <img src="create.png"/>
                   </button>
                 </td>
               </tr>
