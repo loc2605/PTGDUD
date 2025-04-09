@@ -8,17 +8,17 @@ function SideBar() {
       <nav className='w-full mb-4'>
         <ul className='space-y-2'>
           <li>
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                `flex items-center gap-3 text-2xl px-4 py-2 rounded-lg transition ${
-                  isActive ? 'bg-pink-500 text-white' : 'text-gray-500 hover:text-pink-600'
-                }`
-              }
-            >
-              <img src="Squares four 1.png" alt="Dashboard" className="w-6 h-6" />
-              Dashboard
-            </NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `flex items-center gap-3 text-2xl px-4 py-2 rounded-lg transition ${
+                isActive ? 'bg-pink-500 text-white' : 'text-gray-500 hover:text-pink-600'
+              }`
+            }
+          >
+            <img src="Squares four 1.png" alt="Dashboard" className="w-6 h-6" />
+            Dashboard
+          </NavLink>
           </li>
 
           <li>
